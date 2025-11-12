@@ -1,0 +1,240 @@
+[
+  {
+    "code": "01",
+    "name": "Hà Nội",
+    "name_with_type": "Thành phố Hà Nội",
+    "slug": "ha-nội",
+    "type": "thanh-pho"
+  },
+  {
+    "code": "04",
+    "name": "Cao Bằng",
+    "name_with_type": "Cao Bằng",
+    "slug": "cao-bằng",
+    "type": "tinh"
+  },
+  {
+    "code": "08",
+    "name": "Tuyên Quang",
+    "name_with_type": "Tuyên Quang",
+    "slug": "tuyen-quang",
+    "type": "tinh"
+  },
+  {
+    "code": "10",
+    "name": "Lào Cai",
+    "name_with_type": "Lào Cai",
+    "slug": "lao-cai",
+    "type": "tinh"
+  },
+  {
+    "code": "11",
+    "name": "Điện Biên",
+    "name_with_type": "Điện Biên",
+    "slug": "diện-bien",
+    "type": "tinh"
+  },
+  {
+    "code": "12",
+    "name": "Lai Châu",
+    "name_with_type": "Lai Châu",
+    "slug": "lai-chau",
+    "type": "tinh"
+  },
+  {
+    "code": "14",
+    "name": "Sơn La",
+    "name_with_type": "Sơn La",
+    "slug": "son-la",
+    "type": "tinh"
+  },
+  {
+    "code": "19",
+    "name": "Thái Nguyên",
+    "name_with_type": "Thái Nguyên",
+    "slug": "thai-nguyen",
+    "type": "tinh"
+  },
+  {
+    "code": "20",
+    "name": "Lạng Sơn",
+    "name_with_type": "Lạng Sơn",
+    "slug": "lang-son",
+    "type": "tinh"
+  },
+  {
+    "code": "22",
+    "name": "Quảng Ninh",
+    "name_with_type": "Quảng Ninh",
+    "slug": "quang-ninh",
+    "type": "tinh"
+  },
+  {
+    "code": "25",
+    "name": "Phú Thọ",
+    "name_with_type": "Phú Thọ",
+    "slug": "phu-tho",
+    "type": "tinh"
+  },
+  {
+    "code": "27",
+    "name": "Bắc Ninh",
+    "name_with_type": "Bắc Ninh",
+    "slug": "bắc-ninh",
+    "type": "tinh"
+  },
+  {
+    "code": "31",
+    "name": "Hải Phòng",
+    "name_with_type": "Thành phố Hải Phòng",
+    "slug": "hai-phong",
+    "type": "thanh-pho"
+  },
+  {
+    "code": "33",
+    "name": "Hưng Yên",
+    "name_with_type": "Hưng Yên",
+    "slug": "hung-yen",
+    "type": "tinh"
+  },
+  {
+    "code": "37",
+    "name": "Ninh Bình",
+    "name_with_type": "Ninh Bình",
+    "slug": "ninh-binh",
+    "type": "tinh"
+  },
+  {
+    "code": "38",
+    "name": "Thanh Hóa",
+    "name_with_type": "Thanh Hóa",
+    "slug": "thanh-hoa",
+    "type": "tinh"
+  },
+  {
+    "code": "40",
+    "name": "Nghệ An",
+    "name_with_type": "Nghệ An",
+    "slug": "nghệ-an",
+    "type": "tinh"
+  },
+  {
+    "code": "42",
+    "name": "Hà Tĩnh",
+    "name_with_type": "Hà Tĩnh",
+    "slug": "ha-tinh",
+    "type": "tinh"
+  },
+  {
+    "code": "45",
+    "name": "Quảng Trị",
+    "name_with_type": "Quảng Trị",
+    "slug": "quang-tri",
+    "type": "tinh"
+  },
+  {
+    "code": "46",
+    "name": "Huế",
+    "name_with_type": "Thành phố Huế",
+    "slug": "huế",
+    "type": "thanh-pho"
+  },
+  {
+    "code": "48",
+    "name": "Đà Nẵng",
+    "name_with_type": "Thành phố Đà Nẵng",
+    "slug": "da-nẵng",
+    "type": "thanh-pho"
+  },
+  {
+    "code": "51",
+    "name": "Quảng Ngãi",
+    "name_with_type": "Quảng Ngãi",
+    "slug": "quang-ngai",
+    "type": "tinh"
+  },
+  {
+    "code": "56",
+    "name": "Khánh Hòa",
+    "name_with_type": "Khánh Hòa",
+    "slug": "khanh-hoa",
+    "type": "tinh"
+  },
+  {
+    "code": "64",
+    "name": "Gia Lai",
+    "name_with_type": "Gia Lai",
+    "slug": "gia-lai",
+    "type": "tinh"
+  },
+  {
+    "code": "66",
+    "name": "Đắk Lắk",
+    "name_with_type": "Đắk Lắk",
+    "slug": "dắk-lắk",
+    "type": "tinh"
+  },
+  {
+    "code": "68",
+    "name": "Lâm Đồng",
+    "name_with_type": "Lâm Đồng",
+    "slug": "lam-dồng",
+    "type": "tinh"
+  },
+  {
+    "code": "72",
+    "name": "Tây Ninh",
+    "name_with_type": "Tây Ninh",
+    "slug": "tay-ninh",
+    "type": "tinh"
+  },
+  {
+    "code": "75",
+    "name": "Đồng Nai",
+    "name_with_type": "Đồng Nai",
+    "slug": "dồng-nai",
+    "type": "tinh"
+  },
+  {
+    "code": "79",
+    "name": "Hồ Chí Minh",
+    "name_with_type": "Thành phố Hồ Chí Minh",
+    "slug": "hồ-chi-minh",
+    "type": "thanh-pho"
+  },
+  {
+    "code": "86",
+    "name": "Vĩnh Long",
+    "name_with_type": "Vĩnh Long",
+    "slug": "vinh-long",
+    "type": "tinh"
+  },
+  {
+    "code": "87",
+    "name": "Đồng Tháp",
+    "name_with_type": "Đồng Tháp",
+    "slug": "dồng-thap",
+    "type": "tinh"
+  },
+  {
+    "code": "89",
+    "name": "An Giang",
+    "name_with_type": "An Giang",
+    "slug": "an-giang",
+    "type": "tinh"
+  },
+  {
+    "code": "92",
+    "name": "Cần Thơ",
+    "name_with_type": "Thành phố Cần Thơ",
+    "slug": "cần-tho",
+    "type": "thanh-pho"
+  },
+  {
+    "code": "96",
+    "name": "Cà Mau",
+    "name_with_type": "Cà Mau",
+    "slug": "ca-mau",
+    "type": "tinh"
+  }
+]
