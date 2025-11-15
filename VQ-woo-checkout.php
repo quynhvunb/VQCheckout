@@ -87,9 +87,39 @@ if ( ! class_exists( 'VQCheckout_Bootstrap' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'before_woocommerce_init', array( $this, 'declare_hpos_compatibility' ) );
 
-			if ( class_exists( 'VQCheckout\\Core\\Plugin' ) ) {
-				\VQCheckout\Core\Plugin::instance();
+			// Initialize plugin core after plugins are loaded
+			add_action( 'plugins_loaded', array( $this, 'init_plugin' ), 20 );
+		}
+
+		public function init_plugin() {
+			if ( ! class_exists( 'WooCommerce' ) ) {
+				return;
 			}
+
+			if ( class_exists( 'VQCheckout\\Core\\Plugin' ) ) {
+				try {
+					\VQCheckout\Core\Plugin::instance();
+				} catch ( \Exception $e ) {
+					add_action( 'admin_notices', function() use ( $e ) {
+						echo '<div class="error"><p>';
+						echo esc_html__( 'VQ Checkout error: ', 'vq-checkout' ) . esc_html( $e->getMessage() );
+						echo '</p></div>';
+					} );
+
+					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+						error_log( 'VQ Checkout init error: ' . $e->getMessage() );
+						error_log( $e->getTraceAsString() );
+					}
+				}
+			} else {
+				add_action( 'admin_notices', array( $this, 'plugin_class_missing_notice' ) );
+			}
+		}
+
+		public function plugin_class_missing_notice() {
+			echo '<div class="error"><p>';
+			echo esc_html__( 'VQ Checkout error: Core plugin class not found. Please run "composer install" or reinstall the plugin.', 'vq-checkout' );
+			echo '</p></div>';
 		}
 
 		public function load_textdomain() {
@@ -101,9 +131,23 @@ if ( ! class_exists( 'VQCheckout_Bootstrap' ) ) {
 		}
 
 		public function declare_hpos_compatibility() {
-			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			if ( ! class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+				return;
+			}
+
+			// Declare HPOS (High-Performance Order Storage) compatibility
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+				'custom_order_tables',
+				VQCHECKOUT_FILE,
+				true
+			);
+
+			// Declare Cart and Checkout Blocks compatibility
+			// Only declare if blocks package exists
+			if ( class_exists( 'Automattic\WooCommerce\Blocks\Package' ) ||
+			     class_exists( 'Automattic\WooCommerce\StoreApi\StoreApi' ) ) {
 				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
-					'custom_order_tables',
+					'cart_checkout_blocks',
 					VQCHECKOUT_FILE,
 					true
 				);

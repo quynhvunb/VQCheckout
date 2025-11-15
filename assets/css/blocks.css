@@ -1,0 +1,96 @@
+/**
+ * VQ Checkout Blocks Styles
+ */
+
+/* Address fields container */
+.wc-block-components-vqcheckout-address {
+	margin: 1.5em 0;
+	padding: 1em;
+	background: #f9f9f9;
+	border-radius: 4px;
+}
+
+/* Select controls */
+.vqcheckout-gender-select,
+.vqcheckout-province-select,
+.vqcheckout-district-select,
+.vqcheckout-ward-select {
+	margin-bottom: 1em;
+}
+
+.vqcheckout-gender-select select,
+.vqcheckout-province-select select,
+.vqcheckout-district-select select,
+.vqcheckout-ward-select select {
+	width: 100%;
+	padding: 0.75em;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 1em;
+	transition: border-color 0.2s;
+}
+
+.vqcheckout-gender-select select:focus,
+.vqcheckout-province-select select:focus,
+.vqcheckout-district-select select:focus,
+.vqcheckout-ward-select select:focus {
+	border-color: #007cba;
+	outline: none;
+	box-shadow: 0 0 0 1px #007cba;
+}
+
+.vqcheckout-gender-select select:disabled,
+.vqcheckout-province-select select:disabled,
+.vqcheckout-district-select select:disabled,
+.vqcheckout-ward-select select:disabled {
+	background-color: #f0f0f0;
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+/* Labels */
+.vqcheckout-gender-select label,
+.vqcheckout-province-select label,
+.vqcheckout-district-select label,
+.vqcheckout-ward-select label {
+	display: block;
+	margin-bottom: 0.5em;
+	font-weight: 600;
+	color: #333;
+}
+
+/* Required indicator */
+.vqcheckout-province-select label::after,
+.vqcheckout-district-select label::after,
+.vqcheckout-ward-select label::after {
+	content: ' *';
+	color: #cc1818;
+}
+
+/* Editor placeholder */
+.vqcheckout-editor-placeholder {
+	padding: 2em;
+	background: #f9f9f9;
+	border: 2px dashed #ddd;
+	text-align: center;
+	border-radius: 4px;
+}
+
+.vqcheckout-editor-placeholder p {
+	margin: 0.5em 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.wc-block-components-vqcheckout-address {
+		padding: 0.75em;
+	}
+
+	.vqcheckout-gender-select select,
+	.vqcheckout-province-select select,
+	.vqcheckout-district-select select,
+	.vqcheckout-ward-select select {
+		padding: 0.6em;
+		font-size: 0.95em;
+	}
+}

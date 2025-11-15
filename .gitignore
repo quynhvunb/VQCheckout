@@ -12,3 +12,8 @@ package-lock.json
 *.swp
 *.swo
 *~
+
+# E2E test artifacts
+/playwright-report/
+/test-results/
+/.env

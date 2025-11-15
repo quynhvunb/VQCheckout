@@ -1,0 +1,48 @@
+/**
+ * VQ Checkout Frontend CSS
+ */
+
+.vqcheckout-province,
+.vqcheckout-district,
+.vqcheckout-ward {
+	position: relative;
+}
+
+.vqcheckout-province select,
+.vqcheckout-district select,
+.vqcheckout-ward select {
+	width: 100%;
+	padding: 0.75em;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 1em;
+}
+
+.vqcheckout-province select:focus,
+.vqcheckout-district select:focus,
+.vqcheckout-ward select:focus {
+	outline: none;
+	border-color: #96588a;
+	box-shadow: 0 0 0 1px #96588a;
+}
+
+.vqcheckout-gender {
+	margin-top: 15px;
+}
+
+.vqcheckout-recaptcha-v2 {
+	margin: 20px 0;
+	text-align: center;
+}
+
+.form-row.hidden {
+	display: none !important;
+}
+
+@media (max-width: 768px) {
+	.vqcheckout-province select,
+	.vqcheckout-district select,
+	.vqcheckout-ward select {
+		font-size: 16px;
+	}
+}

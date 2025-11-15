@@ -22,6 +22,7 @@ class Schema {
 			'rate_locations'  => self::rate_locations_schema( $charset_collate ),
 			'security_log'    => self::security_log_schema( $charset_collate ),
 			'locations'       => self::locations_schema( $charset_collate ),
+			'analytics'       => self::analytics_schema( $charset_collate ),
 		);
 	}
 
@@ -101,6 +102,31 @@ class Schema {
 			KEY parent_code (parent_code),
 			KEY level (level),
 			KEY slug (slug)
+		) $charset_collate;";
+	}
+
+	private static function analytics_schema( $charset_collate ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'vqcheckout_analytics';
+
+		return "CREATE TABLE {$table} (
+			id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			event_type varchar(50) NOT NULL,
+			ward_code varchar(10) DEFAULT NULL,
+			province varchar(10) DEFAULT NULL,
+			district varchar(10) DEFAULT NULL,
+			order_id bigint(20) UNSIGNED DEFAULT NULL,
+			order_total decimal(10,2) DEFAULT NULL,
+			shipping_cost decimal(10,2) DEFAULT NULL,
+			cost decimal(10,2) DEFAULT NULL,
+			cache_hit tinyint(1) DEFAULT NULL,
+			created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (id),
+			KEY event_type (event_type),
+			KEY ward_code (ward_code),
+			KEY province (province),
+			KEY created_at (created_at),
+			KEY event_date (event_type, created_at)
 		) $charset_collate;";
 	}
 }
