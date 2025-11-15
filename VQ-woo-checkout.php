@@ -102,8 +102,16 @@ if ( ! class_exists( 'VQCheckout_Bootstrap' ) ) {
 
 		public function declare_hpos_compatibility() {
 			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+				// Declare HPOS compatibility
 				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
 					'custom_order_tables',
+					VQCHECKOUT_FILE,
+					true
+				);
+
+				// Declare Cart and Checkout Blocks compatibility
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+					'cart_checkout_blocks',
 					VQCHECKOUT_FILE,
 					true
 				);
