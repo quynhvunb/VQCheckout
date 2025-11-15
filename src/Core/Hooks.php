@@ -21,6 +21,7 @@ class Hooks {
 
 	public function init() {
 		add_action( 'init', array( $this, 'init_migrations' ) );
+		add_action( 'init', array( $this, 'init_currency' ) );
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		add_filter( 'woocommerce_shipping_methods', array( $this, 'register_shipping_methods' ) );
 		add_action( 'admin_menu', array( $this, 'init_admin' ) );
@@ -50,6 +51,11 @@ class Hooks {
 		return $methods;
 	}
 
+	public function init_currency() {
+		$currency = new \VQCheckout\Checkout\Currency();
+		$currency->init();
+	}
+
 	public function init_admin() {
 		if ( ! is_admin() ) {
 			return;
@@ -60,6 +66,9 @@ class Hooks {
 
 		$assets = new \VQCheckout\Admin\Assets();
 		$assets->init();
+
+		$order_meta = new \VQCheckout\Admin\Order_Meta();
+		$order_meta->init();
 	}
 
 	public function init_checkout() {
@@ -69,6 +78,9 @@ class Hooks {
 
 		$fields = new \VQCheckout\Checkout\Fields();
 		$fields->init();
+
+		$session = new \VQCheckout\Checkout\Session();
+		$session->init();
 
 		$handler = new \VQCheckout\Checkout\Handler();
 		$handler->init();
