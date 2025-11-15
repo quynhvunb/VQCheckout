@@ -19,6 +19,8 @@
 			$(document).on('submit', '#vqcheckout-rate-form', this.saveRate.bind(this));
 			$(document).on('change', '#rate_zone_id', this.loadShippingMethods.bind(this));
 			$(document).on('click', '.vqcheckout-export-rates', this.exportRates.bind(this));
+			$(document).on('click', '.vqcheckout-import-rates', this.openImportDialog.bind(this));
+			$(document).on('click', '#doaction, #doaction2', this.handleBulkAction.bind(this));
 		},
 
 		initSortable() {
@@ -259,26 +261,136 @@
 		},
 
 		async exportRates() {
+			const selectedIds = this.getSelectedRateIds();
+
 			try {
-				const rates = await $.ajax({
-					url: `${window.vqCheckoutAdmin.restUrl}/admin/rates`,
-					method: 'GET',
+				const data = await $.ajax({
+					url: `${window.vqCheckoutAdmin.restUrl}/admin/rates/export`,
+					method: 'POST',
+					data: JSON.stringify({ rate_ids: selectedIds }),
+					contentType: 'application/json',
 					beforeSend: (xhr) => {
 						xhr.setRequestHeader('X-WP-Nonce', window.vqCheckoutAdmin.nonce);
 					}
 				});
 
-				const blob = new Blob([JSON.stringify(rates, null, 2)], { type: 'application/json' });
+				const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
 				const url = URL.createObjectURL(blob);
 				const a = document.createElement('a');
 				a.href = url;
-				a.download = `vqcheckout-rates-${Date.now()}.json`;
+				a.download = `vqcheckout-rates-export-${Date.now()}.json`;
 				a.click();
 				URL.revokeObjectURL(url);
+
+				const count = selectedIds.length || data.meta.rates_count;
+				alert(`Exported ${count} rate(s) successfully`);
 			} catch (error) {
 				console.error('Export error:', error);
 				alert(window.vqCheckoutAdmin.i18n.error);
 			}
+		},
+
+		openImportDialog() {
+			const input = document.createElement('input');
+			input.type = 'file';
+			input.accept = 'application/json';
+			input.onchange = (e) => {
+				const file = e.target.files[0];
+				if (file) {
+					this.importRates(file);
+				}
+			};
+			input.click();
+		},
+
+		async importRates(file) {
+			try {
+				const text = await file.text();
+				const data = JSON.parse(text);
+
+				const options = {
+					overwrite: confirm('Overwrite existing rates with same title?'),
+					skip_existing: true,
+					validate_only: false
+				};
+
+				const result = await $.ajax({
+					url: `${window.vqCheckoutAdmin.restUrl}/admin/rates/import`,
+					method: 'POST',
+					data: JSON.stringify({ data, options }),
+					contentType: 'application/json',
+					beforeSend: (xhr) => {
+						xhr.setRequestHeader('X-WP-Nonce', window.vqCheckoutAdmin.nonce);
+					}
+				});
+
+				if (result.success) {
+					const msg = `Import completed!\nImported: ${result.counts.imported}\nSkipped: ${result.counts.skipped}\nErrors: ${result.counts.errors}`;
+					alert(msg);
+					if (result.counts.imported > 0) {
+						location.reload();
+					}
+				}
+			} catch (error) {
+				console.error('Import error:', error);
+				const errorMsg = error.responseJSON?.message || error.message || 'Import failed';
+				alert(`Import error: ${errorMsg}`);
+			}
+		},
+
+		async handleBulkAction(e) {
+			e.preventDefault();
+
+			const actionSelect = $(e.currentTarget).siblings('select');
+			const action = actionSelect.val();
+
+			if (!action || action === '-1') {
+				return;
+			}
+
+			const selectedIds = this.getSelectedRateIds();
+			if (selectedIds.length === 0) {
+				alert('Please select at least one rate');
+				return;
+			}
+
+			let confirmMsg = `Are you sure you want to ${action} ${selectedIds.length} rate(s)?`;
+			if (action === 'delete') {
+				confirmMsg = `Are you sure you want to delete ${selectedIds.length} rate(s)? This cannot be undone.`;
+			}
+
+			if (!confirm(confirmMsg)) {
+				return;
+			}
+
+			try {
+				const result = await $.ajax({
+					url: `${window.vqCheckoutAdmin.restUrl}/admin/rates/bulk`,
+					method: 'POST',
+					data: JSON.stringify({
+						action: action,
+						rate_ids: selectedIds
+					}),
+					contentType: 'application/json',
+					beforeSend: (xhr) => {
+						xhr.setRequestHeader('X-WP-Nonce', window.vqCheckoutAdmin.nonce);
+					}
+				});
+
+				alert(result.message);
+				location.reload();
+			} catch (error) {
+				console.error('Bulk action error:', error);
+				alert(window.vqCheckoutAdmin.i18n.error);
+			}
+		},
+
+		getSelectedRateIds() {
+			const ids = [];
+			$('input[name="rate[]"]:checked').each(function() {
+				ids.push(parseInt($(this).val()));
+			});
+			return ids;
 		}
 	};
 

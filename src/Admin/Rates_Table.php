@@ -48,6 +48,14 @@ class Rates_Table extends \WP_List_Table {
 		);
 	}
 
+	public function get_bulk_actions() {
+		return array(
+			'delete'  => __( 'Xóa', 'vq-checkout' ),
+			'block'   => __( 'Chặn giao hàng', 'vq-checkout' ),
+			'unblock' => __( 'Bỏ chặn', 'vq-checkout' ),
+		);
+	}
+
 	public function column_cb( $item ) {
 		return sprintf( '<input type="checkbox" name="rate[]" value="%d" />', $item['id'] );
 	}

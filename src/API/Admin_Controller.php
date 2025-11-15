@@ -95,6 +95,62 @@ class Admin_Controller extends \WP_REST_Controller {
 				),
 			)
 		);
+
+		register_rest_route(
+			$this->namespace,
+			'/admin/rates/export',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'export_rates' ),
+				'permission_callback' => array( $this, 'check_permission' ),
+				'args'                => array(
+					'rate_ids' => array(
+						'type'    => 'array',
+						'default' => array(),
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/admin/rates/import',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'import_rates' ),
+				'permission_callback' => array( $this, 'check_permission' ),
+				'args'                => array(
+					'data'    => array(
+						'required' => true,
+						'type'     => 'object',
+					),
+					'options' => array(
+						'type'    => 'object',
+						'default' => array(),
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			$this->namespace,
+			'/admin/rates/bulk',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'bulk_action' ),
+				'permission_callback' => array( $this, 'check_permission' ),
+				'args'                => array(
+					'action'   => array(
+						'required' => true,
+						'type'     => 'string',
+					),
+					'rate_ids' => array(
+						'required' => true,
+						'type'     => 'array',
+					),
+				),
+			)
+		);
 	}
 
 	public function check_permission() {
@@ -254,6 +310,86 @@ class Admin_Controller extends \WP_REST_Controller {
 		}
 
 		return rest_ensure_response( $methods );
+	}
+
+	public function export_rates( $request ) {
+		$rate_ids = $request->get_param( 'rate_ids' );
+
+		$exporter = new \VQCheckout\Admin\Import_Export();
+		$data     = $exporter->export_rates( $rate_ids );
+
+		return rest_ensure_response( $data );
+	}
+
+	public function import_rates( $request ) {
+		$data    = $request->get_param( 'data' );
+		$options = $request->get_param( 'options' );
+
+		$importer = new \VQCheckout\Admin\Import_Export();
+		$result   = $importer->import_rates( $data, $options );
+
+		if ( ! $result['success'] ) {
+			return new \WP_Error( 'import_failed', $result['error'], array( 'status' => 400 ) );
+		}
+
+		return rest_ensure_response( $result );
+	}
+
+	public function bulk_action( $request ) {
+		$action   = $request->get_param( 'action' );
+		$rate_ids = $request->get_param( 'rate_ids' );
+
+		if ( empty( $rate_ids ) ) {
+			return new \WP_Error( 'empty_selection', __( 'No rates selected', 'vq-checkout' ), array( 'status' => 400 ) );
+		}
+
+		global $wpdb;
+		$table = $wpdb->prefix . 'vqcheckout_ward_rates';
+
+		switch ( $action ) {
+			case 'delete':
+				$rate_repo = $this->container->get( 'rate_repository' );
+				foreach ( $rate_ids as $rate_id ) {
+					$rate_repo->delete_rate( $rate_id );
+				}
+				$message = sprintf( __( '%d rates deleted', 'vq-checkout' ), count( $rate_ids ) );
+				break;
+
+			case 'block':
+				$ids_placeholder = implode( ',', array_fill( 0, count( $rate_ids ), '%d' ) );
+				$wpdb->query(
+					$wpdb->prepare(
+						"UPDATE {$table} SET is_blocked = 1 WHERE id IN ($ids_placeholder)",
+						$rate_ids
+					)
+				);
+				$message = sprintf( __( '%d rates blocked', 'vq-checkout' ), count( $rate_ids ) );
+				break;
+
+			case 'unblock':
+				$ids_placeholder = implode( ',', array_fill( 0, count( $rate_ids ), '%d' ) );
+				$wpdb->query(
+					$wpdb->prepare(
+						"UPDATE {$table} SET is_blocked = 0 WHERE id IN ($ids_placeholder)",
+						$rate_ids
+					)
+				);
+				$message = sprintf( __( '%d rates unblocked', 'vq-checkout' ), count( $rate_ids ) );
+				break;
+
+			default:
+				return new \WP_Error( 'invalid_action', __( 'Invalid bulk action', 'vq-checkout' ), array( 'status' => 400 ) );
+		}
+
+		$cache = $this->container->get( 'cache' );
+		$cache->flush();
+
+		return rest_ensure_response(
+			array(
+				'success' => true,
+				'message' => $message,
+			)
+		);
 	}
 
 	private function get_rate_schema() {
