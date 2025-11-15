@@ -23,6 +23,15 @@ class Hooks {
 		add_action( 'init', array( $this, 'init_migrations' ) );
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		add_filter( 'woocommerce_shipping_methods', array( $this, 'register_shipping_methods' ) );
+
+		if ( is_admin() ) {
+			$this->init_admin();
+		}
+	}
+
+	public function init_admin() {
+		$settings_page = $this->container->get( 'settings_page' );
+		$settings_page->init();
 	}
 
 	public function init_migrations() {
