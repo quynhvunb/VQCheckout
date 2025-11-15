@@ -20,12 +20,13 @@ Tối ưu trang thanh toán WooCommerce cho thị trường Việt Nam với ph�
 - ✅ Tự điền địa chỉ theo SĐT (privacy-by-design)
 - ✅ Export/Import rates (JSON format)
 - ✅ Bulk operations (delete, block, unblock)
-- ⏳ E2E tests
+- ✅ E2E tests (Playwright)
 
-### P2 (Future)
-- 📋 Performance monitoring
-- 📋 Cache preheating
-- 📋 Multi-currency support
+### P2 (Advanced Features)
+- ✅ Performance monitoring (tracking & metrics)
+- ✅ Cache preheating (tự động warm cache theo wards phổ biến)
+- ✅ Multi-currency support (hỗ trợ đa tiền tệ)
+- ✅ Advanced analytics (thống kê chi tiết & dashboard)
 
 ## Yêu cầu
 
@@ -95,6 +96,58 @@ Plugin hỗ trợ đầy đủ **WooCommerce Checkout Block** (Gutenberg blocks)
 - ✅ Validation tự động
 - ✅ Tương thích với Checkout Block settings
 - ✅ Responsive design
+
+## P2 Advanced Features
+
+### Performance Monitoring
+
+Theo dõi và phân tích hiệu suất plugin:
+
+- **Metrics Tracking**: Ghi lại thời gian xử lý cho các operations
+- **Memory Monitoring**: Theo dõi memory usage
+- **Slow Operations**: Tự động detect operations chậm (> 100ms)
+- **Dashboard**: Xem summary metrics trong Analytics dashboard
+
+**Kích hoạt:** VQ Checkout → Settings → Advanced Features (P2) → Performance Monitor
+
+### Cache Preheating
+
+Tự động warm cache cho wards phổ biến:
+
+- **Auto-preheat**: Chạy hàng ngày qua WP-Cron
+- **Top 50 Wards**: Cache wards được đặt hàng nhiều nhất
+- **Multiple Subtotals**: Preheat cho các mức giá phổ biến
+- **Manual Trigger**: Chạy thủ công từ Analytics dashboard
+
+**Lợi ích:** Giảm cache miss rate, tăng tốc checkout cho khách hàng phổ biến
+
+### Multi-Currency Support
+
+Hỗ trợ shipping cost cho nhiều loại tiền tệ:
+
+- **Supported Currencies**: VND, USD, EUR, JPY, KRW, THB
+- **Auto Convert**: Tự động quy đổi shipping cost theo currency hiện tại
+- **Smart Rounding**: Làm tròn phù hợp với từng loại tiền
+- **Rate Updates**: Cập nhật tỷ giá 2 lần/ngày
+
+**Kích hoạt:** VQ Checkout → Settings → Advanced Features (P2) → Multi-Currency
+
+### Advanced Analytics
+
+Thống kê và phân tích chi tiết:
+
+- **Checkout Stats**: Tổng orders, revenue, avg shipping
+- **Popular Wards**: Top 10 wards theo orders và revenue
+- **Cache Performance**: Hit rate, cache hits/misses
+- **Daily Charts**: Biểu đồ orders và revenue theo ngày
+- **Province Distribution**: Phân bố orders theo tỉnh/thành
+- **Performance Summary**: Tổng hợp metrics theo operations
+
+**Truy cập:** WP Admin → VQ Checkout → Analytics
+
+**Database:** Analytics data được lưu trong bảng `wp_vqcheckout_analytics`
+
+**Cleanup:** Tự động xóa data cũ hơn 90 ngày (configurable)
 
 ## REST API
 

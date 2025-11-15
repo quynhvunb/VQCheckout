@@ -157,6 +157,50 @@ class Settings_Page {
 				'label' => __( 'Cho phép tự động điền địa chỉ dựa trên SĐT đã đặt hàng', 'vq-checkout' ),
 			)
 		);
+
+		// P2 Features Section
+		add_settings_section(
+			'vqcheckout_p2_section',
+			__( 'Tính năng nâng cao (P2)', 'vq-checkout' ),
+			null,
+			'vqcheckout-settings'
+		);
+
+		add_settings_field(
+			'enable_performance_monitor',
+			__( 'Performance Monitor', 'vq-checkout' ),
+			array( $this, 'render_checkbox_field' ),
+			'vqcheckout-settings',
+			'vqcheckout_p2_section',
+			array(
+				'name'  => 'enable_performance_monitor',
+				'label' => __( 'Bật giám sát hiệu suất và tracking metrics', 'vq-checkout' ),
+			)
+		);
+
+		add_settings_field(
+			'enable_analytics',
+			__( 'Analytics', 'vq-checkout' ),
+			array( $this, 'render_checkbox_field' ),
+			'vqcheckout-settings',
+			'vqcheckout_p2_section',
+			array(
+				'name'  => 'enable_analytics',
+				'label' => __( 'Bật analytics và thống kê nâng cao', 'vq-checkout' ),
+			)
+		);
+
+		add_settings_field(
+			'enable_multi_currency',
+			__( 'Multi-Currency', 'vq-checkout' ),
+			array( $this, 'render_checkbox_field' ),
+			'vqcheckout-settings',
+			'vqcheckout_p2_section',
+			array(
+				'name'  => 'enable_multi_currency',
+				'label' => __( 'Bật hỗ trợ đa tiền tệ cho shipping', 'vq-checkout' ),
+			)
+		);
 	}
 
 	public function sanitize_options( $input ) {
@@ -172,6 +216,10 @@ class Settings_Page {
 			'freeship_remove_other_methob',
 			'enable_recaptcha_create_order',
 			'enable_recaptcha_get_address',
+			'enable_phone_lookup',
+			'enable_performance_monitor',
+			'enable_analytics',
+			'enable_multi_currency',
 		);
 
 		foreach ( $checkboxes as $field ) {

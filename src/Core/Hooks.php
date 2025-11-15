@@ -23,6 +23,7 @@ class Hooks {
 		add_action( 'init', array( $this, 'init_migrations' ) );
 		add_action( 'init', array( $this, 'init_currency' ) );
 		add_action( 'init', array( $this, 'init_blocks' ) );
+		add_action( 'init', array( $this, 'init_p2_features' ) );
 		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 		add_filter( 'woocommerce_shipping_methods', array( $this, 'register_shipping_methods' ) );
 		add_action( 'admin_menu', array( $this, 'init_admin' ) );
@@ -65,6 +66,24 @@ class Hooks {
 		$blocks->init();
 	}
 
+	public function init_p2_features() {
+		// Performance Monitor
+		$monitor = new \VQCheckout\Performance\Monitor();
+		$monitor->init();
+
+		// Cache Preheater
+		$preheater = new \VQCheckout\Performance\Cache_Preheater();
+		$preheater->init();
+
+		// Multi-Currency
+		$multi_currency = new \VQCheckout\Checkout\Multi_Currency();
+		$multi_currency->init();
+
+		// Analytics Tracker
+		$tracker = new \VQCheckout\Analytics\Tracker();
+		$tracker->init();
+	}
+
 	public function init_admin() {
 		if ( ! is_admin() ) {
 			return;
@@ -78,6 +97,9 @@ class Hooks {
 
 		$order_meta = new \VQCheckout\Admin\Order_Meta();
 		$order_meta->init();
+
+		$analytics_dashboard = new \VQCheckout\Admin\Analytics_Dashboard();
+		$analytics_dashboard->init();
 	}
 
 	public function init_checkout() {
