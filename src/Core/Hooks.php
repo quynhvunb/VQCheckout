@@ -29,15 +29,8 @@ class Hooks {
 	}
 
 	public function init_admin() {
-		error_log( 'VQCheckout Hooks: init_admin() called' );
-
-		// Debug notice (temporary)
-		\VQCheckout\Admin\Debug_Notice::init();
-
 		$settings_page = $this->container->get( 'settings_page' );
-		error_log( 'VQCheckout Hooks: settings_page retrieved: ' . get_class( $settings_page ) );
 		$settings_page->init();
-		error_log( 'VQCheckout Hooks: settings_page->init() completed' );
 	}
 
 	public function init_migrations() {

@@ -24,12 +24,9 @@ final class Plugin {
 	}
 
 	private function __construct() {
-		error_log( 'VQCheckout Plugin: __construct() called' );
 		$this->container = new Service_Container();
 		$this->register_services();
-		error_log( 'VQCheckout Plugin: services registered' );
 		$this->init_hooks();
-		error_log( 'VQCheckout Plugin: hooks initialized' );
 	}
 
 	private function register_services() {
