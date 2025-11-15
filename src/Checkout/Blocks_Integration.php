@@ -43,19 +43,25 @@ class Blocks_Integration {
 	 * Register Store API extensions
 	 */
 	public function register_blocks_integration() {
-		if ( ! function_exists( 'woocommerce_store_api_register_endpoint_data' ) ) {
-			return;
+		// Modern WooCommerce 8.x uses __experimental_woocommerce_blocks_checkout_update_order_meta
+		// and woocommerce_store_api_checkout_update_order_from_request
+		// The hooks are already registered in init(), so this is just for legacy compatibility
+
+		// Check if old function exists (WC < 7.0)
+		if ( function_exists( 'woocommerce_store_api_register_endpoint_data' ) ) {
+			woocommerce_store_api_register_endpoint_data(
+				array(
+					'endpoint'        => 'checkout',
+					'namespace'       => 'vqcheckout',
+					'data_callback'   => array( $this, 'extend_checkout_data' ),
+					'schema_callback' => array( $this, 'extend_checkout_schema' ),
+					'schema_type'     => ARRAY_A,
+				)
+			);
 		}
 
-		woocommerce_store_api_register_endpoint_data(
-			array(
-				'endpoint'        => 'checkout',
-				'namespace'       => 'vqcheckout',
-				'data_callback'   => array( $this, 'extend_checkout_data' ),
-				'schema_callback' => array( $this, 'extend_checkout_schema' ),
-				'schema_type'     => ARRAY_A,
-			)
-		);
+		// For WC 8.x, we use the checkout block registration directly
+		// This is handled via the woocommerce_blocks_checkout_enqueue_data action
 	}
 
 	/**
