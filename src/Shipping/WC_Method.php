@@ -42,7 +42,7 @@ class WC_Method extends \WC_Shipping_Method {
 		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 	}
 
-	private function init_form_fields() {
+	public function init_form_fields() {
 		$this->instance_form_fields = array(
 			'title'    => array(
 				'title'       => __( 'Tiêu đề phương thức', 'vq-checkout' ),

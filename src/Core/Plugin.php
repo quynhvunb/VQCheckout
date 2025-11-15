@@ -41,6 +41,10 @@ final class Plugin {
 		$this->container->register( 'rate_repository', function( $c ) {
 			return new \VQCheckout\Shipping\Rate_Repository( $c->get( 'cache' ) );
 		} );
+
+		$this->container->register( 'settings_page', function( $c ) {
+			return new \VQCheckout\Admin\Settings_Page( $c );
+		} );
 	}
 
 	private function init_hooks() {
