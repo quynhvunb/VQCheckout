@@ -1,0 +1,11 @@
+parameters:
+	level: 5
+	paths:
+		- src
+	bootstrapFiles:
+		- VQ-woo-checkout.php
+	excludePaths:
+		- vendor
+		- tests
+	ignoreErrors:
+		- '#Function (add_action|add_filter|do_action|apply_filters) invoked with \d+ parameters?, \d+ required#'

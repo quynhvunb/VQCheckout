@@ -1,0 +1,55 @@
+# Copyright (C) 2025 Vũ Quynh
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: VQ Checkout for Woo 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/quynhvunb/vq-checkout/issues\n"
+"POT-Creation-Date: 2025-01-01 00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: Vietnamese\n"
+
+#: VQ-woo-checkout.php
+msgid "VQ Checkout for Woo requires WooCommerce to be installed and active."
+msgstr ""
+
+#: VQ-woo-checkout.php
+msgid "VQ Checkout for Woo requires PHP 7.4 or higher. You are running version %s."
+msgstr ""
+
+#: src/Shipping/WC_Method.php
+msgid "Phí vận chuyển tới Xã/Phường"
+msgstr ""
+
+#: src/Shipping/WC_Method.php
+msgid "Tính phí vận chuyển theo xã/phường với điều kiện linh hoạt"
+msgstr ""
+
+#: src/Shipping/WC_Method.php
+msgid "Tiêu đề phương thức"
+msgstr ""
+
+#: src/Shipping/WC_Method.php
+msgid "Tiêu đề hiển thị khi khách hàng chọn"
+msgstr ""
+
+#: src/Shipping/WC_Method.php
+msgid "Kích hoạt"
+msgstr ""
+
+#: src/Data/Importer.php
+msgid "Locations imported successfully"
+msgstr ""
+
+#: src/Data/Importer.php
+msgid "File not found"
+msgstr ""
+
+#: src/Data/Importer.php
+msgid "Invalid JSON format"
+msgstr ""
+
+#: src/Data/Importer.php
+msgid "%d rates imported"
+msgstr ""
