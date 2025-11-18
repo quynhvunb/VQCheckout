@@ -1,0 +1,82 @@
+/**
+ * VQ Checkout - Frontend Checkout Styles
+ */
+
+/* Province/District/Ward Fields */
+.vqcheckout-province,
+.vqcheckout-district,
+.vqcheckout-ward {
+	position: relative;
+}
+
+/* Loading state */
+.vqcheckout-loading {
+	opacity: 0.6;
+	pointer-events: none;
+	background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="%23666" stroke-width="2" opacity="0.3"/><path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 8 8" to="360 8 8" dur="1s" repeatCount="indefinite"/></path></svg>');
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 16px 16px;
+	padding-right: 35px !important;
+}
+
+/* Hidden fields (default state/city) */
+.vqcheckout-hidden {
+	display: none !important;
+}
+
+/* Order details - Vietnam Address section */
+.vqcheckout-order-details {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #e0e0e0;
+}
+
+.vqcheckout-order-details h2 {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.vqcheckout-order-details p {
+	margin: 5px 0;
+	font-size: 14px;
+}
+
+.vqcheckout-order-details strong {
+	display: inline-block;
+	min-width: 120px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.vqcheckout-loading {
+		background-position: right 5px center;
+		padding-right: 30px !important;
+	}
+}
+
+/* Select2 compatibility (if WooCommerce uses Select2) */
+.select2-container--default .vqcheckout-loading + .select2-selection {
+	opacity: 0.6;
+}
+
+/* Validation error states */
+.woocommerce-invalid .vqcheckout-province,
+.woocommerce-invalid .vqcheckout-district,
+.woocommerce-invalid .vqcheckout-ward {
+	border-color: #e2401c;
+}
+
+/* Accessibility - Focus states */
+.vqcheckout-province:focus,
+.vqcheckout-district:focus,
+.vqcheckout-ward:focus {
+	outline: 2px solid #0073aa;
+	outline-offset: 2px;
+}
+
+/* Disabled state */
+select[data-vqcheckout-field]:disabled {
+	background-color: #f5f5f5;
+	cursor: not-allowed;
+}
