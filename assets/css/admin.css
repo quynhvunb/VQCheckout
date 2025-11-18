@@ -1,0 +1,37 @@
+/**
+ * VQ Checkout Admin Styles
+ */
+
+.vqcheckout-settings-wrap {
+	max-width: 1200px;
+}
+
+.vqcheckout-settings-wrap .nav-tab-wrapper {
+	margin-bottom: 20px;
+}
+
+.vqcheckout-settings-wrap .form-table th {
+	width: 250px;
+	font-weight: 600;
+}
+
+.vqcheckout-settings-wrap .form-table td {
+	padding-bottom: 15px;
+}
+
+.vqcheckout-settings-wrap .form-table p.description {
+	font-size: 13px;
+	color: #666;
+	margin-top: 5px;
+}
+
+.vqcheckout-settings-wrap h2 {
+	margin-top: 30px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+}
+
+.vqcheckout-settings-wrap h2:first-of-type {
+	margin-top: 0;
+}

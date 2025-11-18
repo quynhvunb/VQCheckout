@@ -24,6 +24,17 @@ define( 'VQCHECKOUT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'VQCHECKOUT_URL', plugin_dir_url( __FILE__ ) );
 define( 'VQCHECKOUT_BASENAME', plugin_basename( __FILE__ ) );
 
+// Declare HPOS compatibility early
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+			'custom_order_tables',
+			VQCHECKOUT_FILE,
+			true
+		);
+	}
+} );
+
 if ( ! class_exists( 'VQCheckout_Bootstrap' ) ) {
 	/**
 	 * Bootstrap class
@@ -73,19 +84,30 @@ if ( ! class_exists( 'VQCheckout_Bootstrap' ) ) {
 		}
 
 		private function load_autoloader() {
-			$autoload = VQCHECKOUT_PATH . 'vendor/autoload.php';
-			if ( file_exists( $autoload ) ) {
-				require_once $autoload;
+			// Try composer autoload first
+			$composer_autoload = VQCHECKOUT_PATH . 'vendor/autoload.php';
+			if ( file_exists( $composer_autoload ) ) {
+				require_once $composer_autoload;
+				return;
+			}
+
+			// Fallback to simple PSR-4 autoloader
+			$fallback_autoload = VQCHECKOUT_PATH . 'autoload.php';
+			if ( file_exists( $fallback_autoload ) ) {
+				require_once $fallback_autoload;
 			}
 		}
 
 		private function init() {
+			add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+		}
+
+		public function plugins_loaded() {
 			if ( ! class_exists( 'WooCommerce' ) ) {
 				return;
 			}
 
-			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-			add_action( 'before_woocommerce_init', array( $this, 'declare_hpos_compatibility' ) );
+			$this->load_textdomain();
 
 			if ( class_exists( 'VQCheckout\\Core\\Plugin' ) ) {
 				\VQCheckout\Core\Plugin::instance();
@@ -98,16 +120,6 @@ if ( ! class_exists( 'VQCheckout_Bootstrap' ) ) {
 				false,
 				dirname( VQCHECKOUT_BASENAME ) . '/languages'
 			);
-		}
-
-		public function declare_hpos_compatibility() {
-			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
-					'custom_order_tables',
-					VQCHECKOUT_FILE,
-					true
-				);
-			}
 		}
 	}
 }
